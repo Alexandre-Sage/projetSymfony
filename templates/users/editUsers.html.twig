@@ -1,0 +1,19 @@
+{% extends "/users/index.html.twig"%}
+{% block header %}
+    <h2>Modifier Utilisateur</h2>
+{% endblock %}
+{% block main %}
+    <h1>Ajout utilisateur</h1>
+    <form class="userAddForm" action="/users/edit/save/{{utilisateur.getId}}" method="post">
+        <label class="userAddLabel" for="firstName"  >Nom</label>
+        <input class="userAddInput" type="text" name="firstName" value="{{utilisateur.getFirstName}}">
+
+        <label class="userAddLabel" for="lastName">Prénom</label>
+        <input class="userAddInput" type="text" name="lastName" value="{{utilisateur.getLastName}}">
+
+        <label class="userAddLabel" for="email">Email</label>
+        <input class="userAddInput" type="text" name="email" value="{{utilisateur.getEmail}}">
+
+        <button type="submit" name="button">Ajouter Utilisateur</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{%extends "/users/index.html.twig"%}
+{%block header%}
+    <h1>Ajout utilisateur</h1>
+{%endblock%}
+{%block main%}
+    <form class="userAddForm" action="/users/save" method="post">
+        <label class="userAddLabel" for="firstName">Nom</label>
+        <input class="userAddInput" type="text" name="firstName" value="">
+
+        <label class="userAddLabel" for="lastName">Prénom</label>
+        <input class="userAddInput" type="text" name="lastName" value="">
+
+        <label class="userAddLabel" for="email">Email</label>
+        <input class="userAddInput" type="text" name="email" value="">
+
+        <button type="submit" name="button">Ajouter Utilisateur</button>
+    </form>
+{%endblock%}

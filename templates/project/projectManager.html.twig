@@ -1,0 +1,49 @@
+{% extends "/users/index.html.twig"%}
+{% block header %}
+    <h1 class="projectPageTitle">Manager projet: {{project.getName}}</h1>
+{% endblock %}
+{% block main %}
+    {% if project %}
+        <div class="projectContainer">
+            <h2 class="projectTitle">Nom du projet: {{project.getName}}</h2>
+            <p class="projectDescrition">Description du projet: {{project.getDescription}}</p>
+            <p class="projectStartDate">Date de début du projet: {{project.getStartDate | date("d M Y")}}</p>
+            <p class="projectEndDate">Date de fin du projet: {{project.getEndDate | date("d M Y")}}</p>
+            <a href="/project/edit/{{project.getId}}">Administrer Projet: {{project.getName}}</a>
+            <form action="/project/delete/{{project.getId}}" method="post">
+                <button type="submit" name="button">Supprimer projet: {{project.getName}}</button>
+            </form>
+        </div>
+    {% endif %}
+    {% if projectTasks %}
+        <div class="tasksContainer">
+            <h3>Taches à accomplir</h3>
+            <a href="/project/{{project.getId}}/task">Administrer Taches</a>
+            {% for task in projectTasks %}
+                <div class="taskContainer">
+                    <h4>Nom de la tache: {{task.getName}}</h4>
+                    <p>Description de la tache: {{task.getDescription}}</p>
+                    <p>Date de début de la tache: {{task.getStartDate | date("d M Y")}}</p>
+                    <p>Date de la fin de la tache: {{task.getEndDate | date("d M Y")}}</p>
+                    <a href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier tache: {{task.getName}}</a>
+                    <form class="" action="/project/{{project.getId}}/task/{{task.getId}}/delete" method="post">
+                        <button type="submit"  name="button">Supprimer: {{task.getName}}</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if projectUsers %}
+        <div class="usersContainer">
+            <h3>Membres du projet</h3>
+            <a href="/project/edit/{{project.getId}}/addUsers">Administrer utilisateur</a>
+            {% for user in projectUsers %}
+                <div class="userContainer">
+                    <p>{{user.getFirstName}}</p>
+                    <p>{{user.getLastName}}</p>
+                    <p>{{user.getEmail}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

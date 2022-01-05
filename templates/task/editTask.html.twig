@@ -1,0 +1,20 @@
+{% block header %}
+    <h3>Tache a modifier: {{task.getName}} du projet: {{project.getName}}</h3>
+    <p>{{dump(project)}}</p>
+{% endblock %}
+
+{% block main %}
+    {% if task %}
+        <form class="" action="/project/{{project.getId}}/task/{{task.getId}}/edit/save" method="post">
+            <label for="taskName" value="{{task.getName}}">Nom de la tache</label>
+            <input type="text" name="taskName" value="{{task.getName}}"/>
+            <label for="taskDescription">Description de la tache</label>
+            <input type="text" name="taskDescription" value="{{task.getDescription}}"/>
+            <label for="taskStartingDate">Date de début de la tache</label>
+            <input type="text" name="taskStartingDate" value="{{task.getStartDate | date("d M Y")}}"/>
+            <label for="taskEndingDate">Date de fin de la tache</label>
+            <input type="text" name="taskEndingDate" value="{{task.getEndDate | date("d M Y")}}"/>
+            <button type="submit" name="button">Ajouter</button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{%extends "/project/index.html.twig"%}
+{%block header%}
+    <h1>Modifier Projet</h1>
+{%endblock%}
+
+{%block main%}
+    {%if project%}
+        <form class="" action="/project/edit/save/{{project.getId}}" method="post">
+            <label for="projectName">Nom du projet</label>
+            <input type="text" name="projectName" value="{{project.getName}}">
+
+            <label for="description">Description du projet</label>
+            <input type="text-area" name="description" value="{{project.getDescription}}"/>
+
+            <label for="startDate">Date de debut</label>
+            <input type="text" name="startDate" value="{{project.getStartDate|date("d M Y") }}"/>
+
+            <label for="endDate">Date de fin</label>
+            <input type="text" name="endDate" value="{{project.getEndDate|date("d M Y")}}"/>
+
+            <button type="submit" name="button">Ajout du projet</button>
+        </form>
+    {%endif%}
+{%endblock%}

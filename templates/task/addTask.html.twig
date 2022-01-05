@@ -1,0 +1,30 @@
+{% extends "/users/index.html.twig"%}
+{% block header %}
+    <h1>Ajouter une taches a un projet</h1>
+{% endblock %}
+{% block main %}
+    {% if projectTasks %}
+        {% for task in projectTasks %}
+            <div class="">
+                <h4>{{task.getName}}</h4>
+                <p>{{task.getDescription}}</p>
+                <p>{{task.getStartDate | date("d M Y")}}</p>
+                <p>{{task.getEndDate | date("d M Y")}}</p>
+                <a href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if project %}
+        <form class="" action="/project/{{project.getId}}/task/save" method="post">
+            <label for="taskName">Nom de la tache</label>
+            <input type="text" name="taskName"/>
+            <label for="taskDescription">Description de la tache</label>
+            <input type="text" name="taskDescription"/>
+            <label for="taskStartingDate">Date de début de la tache</label>
+            <input type="text" name="taskStartingDate"/>
+            <label for="taskEndingDate">Date de fin de la tache</label>
+            <input type="text" name="taskEndingDate"/>
+            <button type="submit" name="button">Ajouter</button>
+        </form>
+    {% endif %}
+{% endblock %}

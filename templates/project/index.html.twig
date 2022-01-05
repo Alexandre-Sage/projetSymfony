@@ -1,0 +1,23 @@
+{% extends "/users/index.html.twig"%}
+{%block header%}
+    <h1>Projets en Cours</h1>
+    <nav>
+        <ul>
+            <li><a href="/users">Users Manager</a></li>
+            <li><a href="/project/add">Ajouter Projet</a></li>
+        </ul>
+    </nav>
+{%endblock%}
+{%block main%}
+    {%if projects%}
+        {%for project in projects%}
+            <div class="projectContainer">
+                <h2 class="project title">{{project.getName}}</h2>
+                <p class="projectDescrition">{{project.getDescription}}</p>
+                <p class="projectStartDate">{{project.getStartDate | date("d M Y")}}</p>
+                <p class="projectEndDate">{{project.getEndDate | date("d M Y")}}</p>
+                <a href="/project/{{project.getId}}">Manager: {{project.getName}}</a>
+            </div>
+        {%endfor%}
+    {%endif%}
+{%endblock%}
