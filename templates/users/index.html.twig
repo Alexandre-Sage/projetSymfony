@@ -2,16 +2,22 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Benvenido</title>
+        <title>Utilisateur</title>
+        <link rel="stylesheet" href="/css/global.css" />
+        <link rel="stylesheet" href="/css/btn-linear-flat.css"/>
+        <link rel="stylesheet" href="/css/btn_croix.css"/>
+        {% block link %}
+            <link rel="stylesheet" href="/css/users.css" />
+        {% endblock %}
     </head>
     <body>
         <header>
             {% block header %}
                 <h1>Gestionaire de projets</h1>
                 <nav>
-                    <ul>
-                        <li><a href="/users/add/">Ajouter un utilisateur</a></li>
-                        <li><a href="/project">Manager les Projets</a></li>
+                    <ul class="navListContainer">
+                        <li class="navListItem"><a class="navLink" href="/users/add/">Ajouter un utilisateur</a></li>
+                        <li class="navListItem"><a class="navLink" href="/project">Manager les Projets</a></li>
                     </ul>
                 </nav>
             {% endblock %}
@@ -21,13 +27,15 @@
                 {% if users %}
                     {% for user in users %}
                         <div class="userContainer">
-                            <h3 class="userName">{{user.getFirstName}}</h3>
-                            <p class="userLastName">{{user.getLastName}}</p>
-                            <p class="userEmail">{{user.getEmail}}</p>
-                            <a href="/users/edit/{{user.getId}}">Modifier l'utilisateur {{user.getFirstName}}{{user.getLastName}}</a>
-                            <form action="/users/delete/{{user.getId}}" method="post">
-                                <button type="submit" name="button">Supprimer utilisateur</button>
-                            </form>
+                            <h3 class="userName">Prenom: {{user.getFirstName}}</h3>
+                            <p class="userLastName">Nom: {{user.getLastName}}</p>
+                            <p class="userEmail">Email: {{user.getEmail}}</p>
+                            <div class="userBtnContainer">
+                                <a class="userEditLink btn-linear-flat" href="/users/edit/{{user.getId}}">Modifier l'utilisateur</a>
+                                <form action="/users/delete/{{user.getId}}" method="post">
+                                    <button class="btn-croix btnDeleteUser" type="submit" name="button">Supprimer utilisateur</button>
+                                </form>
+                            </div>
                         </div>
                     {% endfor %}
                 {% endif %}

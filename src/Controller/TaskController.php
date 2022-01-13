@@ -59,7 +59,9 @@ class TaskController extends AbstractController{
             $entityManager= $doctrine->getManager();
             $task->setName($request->request->get("taskName"));
             $task->setDescription($request->request->get("taskDescription"));
+            $task->setStartDateStr($request->request->get("taskStartingDate"));
             $task->setStartDate(new\DateTime($request->request->get("taskStartingDate")));
+            $task->setEndDateStr($request->request->get("taskEndingDate"));
             $task->setEndDate(new\DateTime($request->request->get("taskEndingDate")));
             $task->setProject($project);
             $entityManager->persist($task);

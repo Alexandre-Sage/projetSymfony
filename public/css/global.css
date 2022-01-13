@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Ubuntu:ital,wght@0,500;1,500&display=swap');
+
+*{
+    font-size: 10px;
+    color: var(--font-color-white)
+}
+
+:root{
+    --box-show: 1px solid black;
+    --container-border: 1px solid var(--font-color-white);
+    --main-title-size: 4rem;
+    --font-color-white: rgba(206, 205, 213, 0.9);
+    --vietnam-font: 'Be Vietnam Pro';
+}
+
+body{
+    background: rgb(46,41,69);
+    background: linear-gradient(0deg, rgba(46,41,69,1) 53%, rgba(56,57,51,1) 100%);
+    background-attachment: fixed;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+h1{
+    font-size: var(--main-title-size);
+    text-align: center;
+    font-family: var(--vietnam-font);
+}
+
+nav{
+    border-top: var(--container-border);
+    border-bottom: var(--container-border);
+    display: flex;
+}
+
+.navListContainer{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.navLink{
+    font-size: 2rem;
+    font-family: var(--vietnam-font);
+}
+
+button{
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+a{
+    text-decoration: none;
+    font-family: var(--vietnam-font);
+    font-size: 1.5rem;
+}
+
+label{
+    font-size: 2rem;
+    font-family: var(--vietnam-font);
+}
+
+input{
+    width: 75rem;
+    height: 3rem;
+    font-size: 2rem;
+    background: none;
+    border: var(--container-border);
+    border-radius: 1rem;
+}
+
+.formDiv{
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

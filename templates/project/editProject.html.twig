@@ -6,17 +6,19 @@
 {%block main%}
     {%if project%}
         <form class="" action="/project/edit/save/{{project.getId}}" method="post">
-            <label for="projectName">Nom du projet</label>
+            <label for="projectName">Nom du projet: </label>
             <input type="text" name="projectName" value="{{project.getName}}">
 
-            <label for="description">Description du projet</label>
+            <label for="description">Description du projet: </label>
             <input type="text-area" name="description" value="{{project.getDescription}}"/>
 
-            <label for="startDate">Date de debut</label>
-            <input type="text" name="startDate" value="{{project.getStartDate|date("d M Y") }}"/>
+            <p>Date de début actuelle: {{project.getStartDate|date("d M Y")}}</p>
+            <label for="startDate">Nouvelle date de debut</label>
+            <input type="date" name="startDate"/>
 
-            <label for="endDate">Date de fin</label>
-            <input type="text" name="endDate" value="{{project.getEndDate|date("d M Y")}}"/>
+            <p>Date de fin actuelle: {{project.getEndDate|date("d M Y")}}</p>
+            <label for="endDate">Nouvelle date de fin</label>
+            <input type="date" name="endDate" />
 
             <button type="submit" name="button">Ajout du projet</button>
         </form>

@@ -1,0 +1,33 @@
+
+.userContainer{
+    border: var(--container-border);
+    border-radius: 1rem;
+    height: 45rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    width: 75%
+}
+
+.userName{
+    font-family: var(--vietnam-font);
+    font-size: 2.5rem;
+}
+
+.userLastName{
+    font-family: var(--vietnam-font);
+    font-size: 2rem;
+}
+
+.userEmail{
+    font-family: var(--vietnam-font);
+    font-size: 2rem;
+}
+
+.userBtnContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}

@@ -2,9 +2,9 @@
 {%block header%}
     <h1>Projets en Cours</h1>
     <nav>
-        <ul>
-            <li><a href="/users">Users Manager</a></li>
-            <li><a href="/project/add">Ajouter Projet</a></li>
+        <ul class="navListContainer">
+            <li><a class="navLink" href="/users">Users Manager</a></li>
+            <li><a class="navLink" href="/project/add">Ajouter Projet</a></li>
         </ul>
     </nav>
 {%endblock%}
@@ -12,11 +12,11 @@
     {%if projects%}
         {%for project in projects%}
             <div class="projectContainer">
-                <h2 class="project title">{{project.getName}}</h2>
-                <p class="projectDescrition">{{project.getDescription}}</p>
-                <p class="projectStartDate">{{project.getStartDate | date("d M Y")}}</p>
-                <p class="projectEndDate">{{project.getEndDate | date("d M Y")}}</p>
-                <a href="/project/{{project.getId}}">Manager: {{project.getName}}</a>
+                <h2 class="project title"> Nom du projet: {{project.getName}}</h2>
+                <p class="projectDescrition">Description du projet: <br/>{{project.getDescription}}</p>
+                <p class="projectStartDate">Date de Début du projet: {{project.getStartDate | date("d M Y")}}</p>
+                <p class="projectEndDate">Date de fin du projet: {{project.getEndDate | date("d M Y")}}</p>
+                <a class="btn-linear-flat" href="/project/{{project.getId}}">Administrer: {{project.getName}}</a>
             </div>
         {%endfor%}
     {%endif%}

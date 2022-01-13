@@ -1,0 +1,82 @@
+
+:root
+{
+   --button-linearflat-height: 5rem;
+   --button-linearflat-width: 25rem;
+   --font-button-linearflat-color: rgba(228, 228, 228, 0.8);
+   --border-button-linearflat-color: rgba(255,255,255,0.5);
+   --background-button-linearflat-color: rgba(255,255,255,0.1);
+   --border-button-linearflat-width: 0.1rem;
+   --border-button-linearflat-style: solid;
+   --button-linearflat-letter-spacing: 0.2rem;
+}
+
+/*###################################################*/
+.btn-linear-flat
+{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   line-height: var(--button-linearflat-height);
+   height: var(--button-linearflat-height);
+   width: var(--button-linearflat-width);
+   cursor:pointer;
+   color: var(--font-button-linearflat-color);
+   transition: all 0.5s;
+   position: relative;
+}
+
+.btn-linear-flat p
+{
+   transition: all 0.5s;
+}
+
+.btn-linear-flat::before
+{
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left:0;
+   width: 100%;
+   height: 100%;
+   transition: all 0.5s;
+   border-top-width: var(--border-button-linearflat-width);
+   border-bottom-width: var(--border-button-linearflat-width);
+   border-top-style: var(--border-button-linearflat-style);
+   border-bottom-style: var(--border-button-linearflat-style);
+   border-top-color: var(--border-button-linearflat-color);
+   border-bottom-color: var(--border-button-linearflat-color);
+   transform: scale(0.1,1);
+   opacity: 0;
+}
+
+.btn-linear-flat:hover p
+{
+   letter-spacing: var(--button-linearflat-letter-spacing)
+}
+
+.btn-linear-flat:hover::before
+{
+   opacity: 1;
+   transform: scale(1,1);
+}
+/*Possibiliter d'arréter ici*/
+
+.btn-linear-flat:after
+{
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   transition: all 0.5s;
+   background-color: var(--background-button-linearflat-color);
+}
+/*Possibilité d'arréter ici*/
+
+.btn-linear-flat:hover::after
+{
+   opacity: 0;
+   transform: scale(0.1, 1);
+}

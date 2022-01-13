@@ -1,0 +1,79 @@
+/*VARIABLE A RENOMMER*/
+
+:root
+{
+   --button-croix-height: 5rem;
+   --button-croix-width: 25rem;
+   --font-button-croix-color: rgba(228, 228, 228, 0.8);
+   --border-button-croix-color: rgba(255,255,255,0.5);
+   --background-button-croix-color: rgba(255,255,255,0.1);
+   --border-button-croix-width: 0.1rem;
+   --border-button-croix-style: solid;
+   --button-croix-letter-spacing: 0.2rem;
+   --font-button-croix-size: 2rem;
+}
+
+/*###################################################*/
+.btn-croix
+{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   line-height: var(--button-croix-height);
+   height: var(--button-croix-height);
+   width: var(--button-croix-width);
+   cursor: pointer;
+   color: var(--font-button-croix-color);;
+   transition: all 0.5s;
+   position: relative;
+}
+
+.btn-croix p
+{
+   font-size: var(--font-button-croix-size);
+   display: block;
+   width: 100%;
+   height: 100%;
+   text-align: center;
+   position: absolute;
+}
+
+.btn-croix::before
+{
+   content: '';
+   transition: all 0.5s;
+   border: /*var(--border-button-croix-width) var(--border-button-croix-style) var(--border-button-croix-color)*/;
+   background-color: var(--background-button-croix-color);
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   /*z-index: 1;*/
+}
+
+.btn-croix::after
+{
+   content: '';
+   transition: all 0.5s;
+   /*border: var(--border-button-croix-width) var(--border-button-croix-style) var(--border-button-croix-color);*/
+   background-color: var(--background-button-croix-color);
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   /*z-index: 1;*/
+}
+
+.btn-croix:hover::before
+{
+   transform: rotate(-45deg);
+   background-color: var(--background-button-croix-color);
+}
+
+.btn-croix:hover::after
+{
+   transform: rotate(45deg);
+   background-color: var(--background-button-croix-color));
+}

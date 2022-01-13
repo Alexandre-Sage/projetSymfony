@@ -10,20 +10,24 @@
                 <p>{{task.getDescription}}</p>
                 <p>{{task.getStartDate | date("d M Y")}}</p>
                 <p>{{task.getEndDate | date("d M Y")}}</p>
-                <a href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier</a>
+                <a href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier {{task.getName}}</a>
             </div>
         {% endfor %}
     {% endif %}
     {% if project %}
         <form class="" action="/project/{{project.getId}}/task/save" method="post">
             <label for="taskName">Nom de la tache</label>
+
             <input type="text" name="taskName"/>
             <label for="taskDescription">Description de la tache</label>
+
             <input type="text" name="taskDescription"/>
             <label for="taskStartingDate">Date de début de la tache</label>
-            <input type="text" name="taskStartingDate"/>
+
+            <input type="date" name="taskStartingDate"/>
             <label for="taskEndingDate">Date de fin de la tache</label>
-            <input type="text" name="taskEndingDate"/>
+
+            <input type="date" name="taskEndingDate"/>
             <button type="submit" name="button">Ajouter</button>
         </form>
     {% endif %}

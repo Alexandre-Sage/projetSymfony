@@ -1,0 +1,10 @@
+.userAddForm{
+    border: var(--container-border);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 55rem;
+    width: 75%;
+}

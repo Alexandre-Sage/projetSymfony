@@ -7,13 +7,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
+
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Repository\ProjectRepository;
 use App\Entity\Project;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Repository\TaskRepository;
-
+//Date time create format lire la doc
 class ProjectController extends AbstractController{
     /**
      * @Route("/project", name="project")
@@ -28,21 +32,38 @@ class ProjectController extends AbstractController{
     /**
      * @Route("/project/add", methods={"GET"}, name="project_add")
      */
-    public function addProject(UserRepository $userRepository): Response{
+    public function addProject(UserRepository $userRepository,SessionInterface $session,LoggerInterface $logger): Response{
+
+        $session->set("Alexandre", 5);
+        $sessionId= $session->getId();
         $users=$userRepository->findAll();
+        $logger->debug("ICI ".$sessionId);
         return $this->render("project/AddProject.html.twig", ["users"=>$users]);
     }
 
      /**
       * @Route("/project/save", methods={"post"}, name="project_add_save")
       */
-     public function saveProject(Request $request,  ManagerRegistry $doctrine){
-          $projectData= new Project;
-          $entityManager= $doctrine->getManager();
-          $projectData->setName($request->request->get("projectName"));
-          $projectData->setDescription($request->request->get("description"));
-          $projectData->setStartDate(new\DateTime($request->request->get("startDate")));
-          $projectData->setEndDate(new\DateTime($request->request->get("endDate"))) ;
+    public function saveProject(Request $request,  ManagerRegistry $doctrine, ValidatorInterface $validator, SessionInterface $session, LoggerInterface $logger){
+        $session->set("Alexandre", 5);
+        $sessionId= $session->getId();
+        $logger->debug("ICI".$sessionId);
+        $projectData= new Project;
+        $entityManager= $doctrine->getManager();
+        $projectData->setName($request->request->get("projectName"));
+        $projectData->setDescription($request->request->get("description"));
+        $projectData->setStartDateStr($request->request->get("startDate"));
+        $projectData->setStartDate(new\DateTime($request->request->get("startDate")));
+        $projectData->setEndDateStr($request->request->get("endDate"));
+        $projectData->setEndDate(new\DateTime($request->request->get("endDate")));
+        $errors=$validator->validate($projectData);
+        if (count($errors)>0){
+            $this->addFlash(
+                "error",
+                $errors
+            );
+            return $this->redirectToRoute("project_add");
+        }
           $entityManager->persist($projectData); //Enregistrement des données
           $entityManager->flush();
           return $this->redirectToRoute("project");
@@ -61,8 +82,10 @@ class ProjectController extends AbstractController{
         $entityManager= $doctrine->getManager();
         $project->setName($request->request->get("projectName"));
         $project->setDescription($request->request->get("description"));
+        $project->setStartDateStr($request->request->get("startDate"));
         $project->setStartDate(new\DateTime($request->request->get("startDate")));
-        $project->setEndDate(new\DateTime($request->request->get("endDate"))) ;
+        $project->setEndDateStr($request->request->get("endDate"));
+        $project->setEndDate(new\DateTime($request->request->get("endDate")));
         $entityManager->persist($project); //Enregistrement des données
         $entityManager->flush();
         return $this->redirectToRoute("project");
@@ -103,7 +126,7 @@ class ProjectController extends AbstractController{
         }
         $entityManager->persist($project);
         $entityManager->flush();
-        return $this->redirectToRoute("project");
+        return $this->redirectToRoute("project_manager",["id"=>$project->getId()]);
     }
     /**
     * @Route("/project/{id}", methods={"GET"}, name="project_manager")
