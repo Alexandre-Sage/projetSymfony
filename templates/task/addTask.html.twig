@@ -1,34 +1,34 @@
 {% extends "/users/index.html.twig"%}
+{% block link %}
+    <link rel="stylesheet" href="/css/addProject.css">
+{% endblock %}
 {% block header %}
     <h1>Ajouter une taches a un projet</h1>
 {% endblock %}
 {% block main %}
-    {% if projectTasks %}
-        {% for task in projectTasks %}
-            <div class="">
-                <h4>{{task.getName}}</h4>
-                <p>{{task.getDescription}}</p>
-                <p>{{task.getStartDate | date("d M Y")}}</p>
-                <p>{{task.getEndDate | date("d M Y")}}</p>
-                <a href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier {{task.getName}}</a>
-            </div>
+    {% for errors in app.flashes("error") %}
+        {% for error in errors %}
+            <p class="errorMessage">{{error.message}}</p>
         {% endfor %}
-    {% endif %}
+    {% endfor %}
     {% if project %}
-        <form class="" action="/project/{{project.getId}}/task/save" method="post">
+        <form class="projectCreationForm" action="/project/{{project.getId}}/task/save" method="post">
             <label for="taskName">Nom de la tache</label>
 
             <input type="text" name="taskName"/>
             <label for="taskDescription">Description de la tache</label>
 
             <input type="text" name="taskDescription"/>
-            <label for="taskStartingDate">Date de début de la tache</label>
 
-            <input type="date" name="taskStartingDate"/>
-            <label for="taskEndingDate">Date de fin de la tache</label>
+            <div class="dateContainer">
+                <label for="taskStartingDate">Date de début</label>
+                <input class="dateInput" type="date" name="taskStartingDate"/>
+                <label for="taskEndingDate">Date de fin</label>
 
-            <input type="date" name="taskEndingDate"/>
-            <button type="submit" name="button">Ajouter</button>
+                <input class="dateInput" type="date" name="taskEndingDate"/>
+            </div>
+
+            <button class="btn-linear-flat" type="submit" name="button">Ajouter</button>
         </form>
     {% endif %}
 {% endblock %}

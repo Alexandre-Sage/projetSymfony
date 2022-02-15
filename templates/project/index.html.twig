@@ -1,5 +1,8 @@
-{% extends "/users/index.html.twig"%}
-{%block header%}
+{% extends "/users/index.html.twig" %}
+{% block link %}
+    <link rel="stylesheet" href="/css/projectManager.css">
+{% endblock %}
+{% block header %}
     <h1>Projets en Cours</h1>
     <nav>
         <ul class="navListContainer">
@@ -7,17 +10,17 @@
             <li><a class="navLink" href="/project/add">Ajouter Projet</a></li>
         </ul>
     </nav>
-{%endblock%}
-{%block main%}
-    {%if projects%}
-        {%for project in projects%}
+{% endblock %}
+{% block main %}
+    {% if projects %}
+        {% for project in projects %}
             <div class="projectContainer">
-                <h2 class="project title"> Nom du projet: {{project.getName}}</h2>
+                <h2 class="projectTitle"> Nom du projet: {{project.getName}}</h2>
                 <p class="projectDescrition">Description du projet: <br/>{{project.getDescription}}</p>
                 <p class="projectStartDate">Date de Début du projet: {{project.getStartDate | date("d M Y")}}</p>
                 <p class="projectEndDate">Date de fin du projet: {{project.getEndDate | date("d M Y")}}</p>
                 <a class="btn-linear-flat" href="/project/{{project.getId}}">Administrer: {{project.getName}}</a>
             </div>
-        {%endfor%}
-    {%endif%}
-{%endblock%}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

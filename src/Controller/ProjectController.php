@@ -78,7 +78,7 @@ class ProjectController extends AbstractController{
    /**
     * @Route("/project/edit/save/{id}", methods={"POST"}, name="project_edit_save")
     */
-    public function editProjectSave(Request $request, ManagerRegistry $doctrine, Project $project){
+    public function editProjectSave(Request $request, ManagerRegistry $doctrine, Project $project,ValidatorInterface $validator, SessionInterface $session){
         $entityManager= $doctrine->getManager();
         $project->setName($request->request->get("projectName"));
         $project->setDescription($request->request->get("description"));
@@ -86,9 +86,17 @@ class ProjectController extends AbstractController{
         $project->setStartDate(new\DateTime($request->request->get("startDate")));
         $project->setEndDateStr($request->request->get("endDate"));
         $project->setEndDate(new\DateTime($request->request->get("endDate")));
+        $errors=$validator->validate($project);
+        if (count($errors)>0){
+            $this->addFlash(
+                "error",
+                $errors
+            );
+            return $this->redirectToRoute("project_edit", ["id"=>$project->getId()]);
+        }
         $entityManager->persist($project); //Enregistrement des données
         $entityManager->flush();
-        return $this->redirectToRoute("project");
+        return $this->redirectToRoute("project_manager",["id"=>$project->getId()]);
     }
 
     /**

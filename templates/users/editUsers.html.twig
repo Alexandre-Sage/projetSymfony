@@ -6,6 +6,11 @@
     <h1>Modifier utilisateur</h1>
 {% endblock %}
 {% block main %}
+    {% for errors in app.flashes("error") %}
+        {% for error in errors %}
+            <p class="errorMessage">{{error.message}}</p>
+        {% endfor %}
+    {% endfor %}
 
     <form class="userAddForm" action="/users/edit/save/{{utilisateur.getId}}" method="post">
         <div class="formDiv">

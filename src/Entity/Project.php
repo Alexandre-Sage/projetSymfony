@@ -36,7 +36,9 @@ class Project
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ description vide"
+     *)
      * @Assert\Length(
      * max=2500,
      * maxMessage= "Maximum atteint"
@@ -45,7 +47,9 @@ class Project
     private $description;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ date de debut Vide"
+     *)
      * @var string
      * @Assert\Date
      */
@@ -58,7 +62,9 @@ class Project
     private $start_date;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ date de fin Vide"
+     *)
      * @var string
      * @Assert\Date
      */

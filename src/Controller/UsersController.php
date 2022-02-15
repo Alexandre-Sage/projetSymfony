@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\UserRepository;
 use App\Entity\User;
@@ -36,12 +39,20 @@ class UsersController extends AbstractController{
      * @Route("/users/save",methods={"POST"} ,name="users_save")
      */
 
-    public function saveUsers(Request $request,  ManagerRegistry $doctrine): Response{
+    public function saveUsers(Request $request,  ManagerRegistry $doctrine,ValidatorInterface $validator, SessionInterface $session): Response{
         $userData= new User;
         $entityManager= $doctrine->getManager();
         $userData->setFirstName($request->request->get("firstName"));
         $userData->setLastName($request->request->get("lastName"));
         $userData->setEmail($request->request->get("email"));
+        $errors=$validator->validate($userData);
+        if (count($errors)>0){
+            $this->addFlash(
+                "error",
+                $errors
+            );
+            return $this->redirectToRoute("users_add");
+        }
         $entityManager->persist($userData); //Enregistrement des données
         $entityManager->flush();
         return $this->redirectToRoute("users");
@@ -58,11 +69,19 @@ class UsersController extends AbstractController{
      * @Route("/users/edit/save/{id}", methods={"POST"}, name="users_edit_save")
      */
 
-    public function editUsersSave(Request $request, ManagerRegistry $doctrine, User $user): Response{
+    public function editUsersSave(Request $request, ManagerRegistry $doctrine, User $user, ValidatorInterface $validator, SessionInterface $session): Response{
         $entityManager= $doctrine->getManager();
         $user->setFirstName($request->request->get("firstName"));
         $user->setLastName($request->request->get("lastName"));
         $user->setEmail($request->request->get("email"));
+        $errors=$validator->validate($user);
+        if (count($errors)>0){
+            $this->addFlash(
+                "error",
+                $errors
+            );
+            return $this->redirectToRoute("users_edit",["id"=>$user->getId()]);
+        }
         $entityManager->persist($user);
         $entityManager->flush();
         return $this->redirectToRoute("users");

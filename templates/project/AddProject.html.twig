@@ -1,35 +1,31 @@
 {% extends "/project/index.html.twig"%}
+{% block link %}
+    <link rel="stylesheet" href="/css/addProject.css">
+{% endblock %}
 {% block header %}
-    <h2>Ajouter Projet</h2>
+    <h1>Ajouter Projet</h1>
 {% endblock %}
 {% block main %}
 
     {% for errors in app.flashes("error") %}
         {% for error in errors %}
-            <p>{{error.message}}</p>
+            <p class="errorMessage">{{error.message}}</p>
         {% endfor %}
     {% endfor %}
 
     <form class="projectCreationForm" action="/project/save" method="post">
-    {% if users %}
-        <select class="usersSelector" name="userName">
-        {% for user in users %}
-            <option class="userSelectorOption" value="{{user.getId}}">{{user.getFirstName}}{{user.getLastName}}</option>
-        {% endfor %}
-        </select>
-    {% endif %}
-        <label class="addProjectLabel" for="projectName">Nom du projet: </label>
-        <input class="addProjectInput" type="text" name="projectName">
+        <label for="projectName">Nom du projet: </label>
+        <input type="text" name="projectName">
 
-        <label class="addProjectLabel" for="description">Description du projet: </label>
-        <input class="addProjectInput" type="text-area" name="description"/>
+        <label for="description">Description du projet: </label>
+        <input type="text-area" name="description"/>
+        <div class="dateContainer">
+            <label class="dateLabel" for="startDate">Date de debut: </label>
+            <input class="dateInput" type="date" name="startDate"/>
 
-        <label class="addProjectLabel" for="startDate">Date de debut: </label>
-        <input class="addProjectInput" type="date" name="startDate"/>
-
-        <label class="addProjectLabel" for="endDate">Date de fin: </label>
-        <input class="addProjectInput" type="date" name="endDate"/>
-
-        <button type="submit" name="button">Ajout du projet</button>
+            <label class="dateLabel" for="endDate">Date de fin: </label>
+            <input class="dateInput" type="date" name="endDate"/>
+        </div>
+        <button class="btn-linear-flat" type="submit" name="button">Ajout du projet</button>
     </form>
 {% endblock %}

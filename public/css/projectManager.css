@@ -1,19 +1,32 @@
 .projectContainer{
-
+    display: flex;
+    flex-direction: column;
+    border: var(--container-border);
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    margin-top: 5rem;
+    height: 55rem;
 }
 
 .projectTitle{
-
+    font-size: 3rem;
 }
 
 .projectDescrition{
-
+    font-size: 2rem;
+    text-align: center;
 }
 
 .projectStartDate{
-
+    font-size: 2rem
 }
 
 .projectEndDate{
-    
+    font-size: 2rem
+}
+
+h2{
+    font-size: 3rem;
 }

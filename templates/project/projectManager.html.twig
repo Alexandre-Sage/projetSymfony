@@ -1,4 +1,8 @@
 {% extends "/users/index.html.twig"%}
+{% block link %}
+    <link rel="stylesheet" href="/css/users.css"/>
+    <link rel="stylesheet" href="/css/projectManager.css">
+{% endblock %}
 {% block header %}
     <h1 class="projectPageTitle">Manager projet: {{project.getName}}</h1>
 {% endblock %}
@@ -6,53 +10,45 @@
     {% if project %}
         <div class="projectContainer">
             <h2 class="projectTitle">Nom du projet: {{project.getName}}</h2>
-            <h4>Description du projet: </h4>
-            <p class="projectDescrition">{{project.getDescription}}</p>
-            <h4>Date de début du projet:</h4>
-            <p class="projectStartDate">{{project.getStartDate | date("d M Y")}}</p>
-            <h4>Date de fin du projet:</h4>
-            <p class="projectEndDate">{{project.getEndDate | date("d M Y")}}</p>
-            <a href="/project/edit/{{project.getId}}">Modifier Projet: {{project.getName}}</a>
-            <form action="/project/delete/{{project.getId}}" method="post">
-                <button type="submit" name="button">Supprimer projet: {{project.getName}}</button>
-            </form>
+            <p class="projectDescrition">Description du projet:<br> {{project.getDescription}}</p>
+            <p class="projectStartDate">Date de début du projet: {{project.getStartDate | date("d M Y")}}</p>
+            <p class="projectEndDate">Date de fin du projet: {{project.getEndDate | date("d M Y")}}</p>
+            <div class="userBtnContainer">
+                <a class="btn-linear-flat" href="/project/edit/{{project.getId}}">Modifier Projet: {{project.getName}}</a>
+                <form action="/project/delete/{{project.getId}}" method="post">
+                    <button class="btn-croix" type="submit" name="button">Supprimer projet: {{project.getName}}</button>
+                </form>
+            </div>
+
         </div>
     {% endif %}
     {% if projectTasks %}
-        <div class="tasksContainer">
-            <h3>Taches à accomplir</h3>
-            <a href="/project/{{project.getId}}/task">Administrer Taches</a>
+            <h2>Taches à accomplir</h2>
+            <a class="btn-linear-flat" href="/project/{{project.getId}}/task">Ajouter Taches</a>
             {% for task in projectTasks %}
-                <div class="taskContainer">
-                    <h2>Nom de la tache: {{task.getName}}</h4>
-                    <h4>Description de la tache:</h4>
-                    <p>{{task.getDescription}}</p>
-                    <h4>Date de début de la tache:</h4>
-                    <p>{{task.getStartDate | date("d M Y")}}</p>
-                    <h4>Date de la fin de la tache: </h4>
-                    <p>{{task.getEndDate | date("d M Y")}}</p>
-                    <a href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier tache: {{task.getName}}</a>
-                    <form class="" action="/project/{{project.getId}}/task/{{task.getId}}/delete" method="post">
-                        <button type="submit"  name="button">Supprimer: {{task.getName}}</button>
-                    </form>
+                <div class="projectContainer">
+                    <h2 class="projectTitle">Nom de la tache: {{task.getName}}</h2>
+                    <p class="projectDescrition">Description de la tache:<br> {{task.getDescription}}</p>
+                    <p class="projectStartDate">Date de début de la tache: {{task.getStartDate | date("d M Y")}}</p>
+                    <p class="projectEndDate">Date de la fin de la tache: {{task.getEndDate | date("d M Y")}}</p>
+                    <div class="userBtnContainer">
+                        <a class="btn-linear-flat" href="/project/{{project.getId}}/task/{{task.getId}}/edit">Modifier tache: {{task.getName}}</a>
+                        <form  action="/project/{{project.getId}}/task/{{task.getId}}/delete" method="post">
+                            <button class="btn-croix" type="submit"  name="button">Supprimer: {{task.getName}}</button>
+                        </form>
+                    </div>
                 </div>
             {% endfor %}
-        </div>
     {% endif %}
     {% if projectUsers %}
-        <div class="usersContainer">
             <h2>Membres du projet</h2>
-            <a href="/project/edit/{{project.getId}}/addUsers">Administrer utilisateur</a>
+            <a class="btn-linear-flat" href="/project/edit/{{project.getId}}/addUsers">Administrer utilisateur</a>
             {% for user in projectUsers %}
                 <div class="userContainer">
-                    <h4>Prenom: </h4>
-                    <p>{{user.getFirstName}}</p>
-                    <h4>Nom: </h4>
-                    <p>{{user.getLastName}}</p>
-                    <h4>Email: </h4>
-                    <p>{{user.getEmail}}</p>
+                    <p class="userName">Prenom: {{user.getFirstName}}</p>
+                    <p class="userLastName">Nom: {{user.getLastName}}</p>
+                    <p class="userEmail">Email: {{user.getEmail}}</p>
                 </div>
             {% endfor %}
-        </div>
     {% endif %}
 {% endblock %}

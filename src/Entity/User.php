@@ -23,8 +23,12 @@ class User
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     * @Assert\Email
+     * @Assert\NotBlank(
+     * message="Champ email Vide"
+     *)
+     * @Assert\Email(
+     * message="Email incorrecte"
+     *)
      * @Assert\Length(
      * max=50,
      * maxMessage="Maximum Atteint"
@@ -34,7 +38,9 @@ class User
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ Prénom vide"
+     *)
      * @Assert\Length(
      * max=50,
      * maxMessage="Maximum Atteint"
@@ -44,7 +50,9 @@ class User
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ nom de famille vide"
+     *)
      * @Assert\Length(
      * max=50,
      * maxMessage="Maximum Atteint"

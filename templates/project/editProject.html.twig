@@ -1,11 +1,19 @@
 {%extends "/project/index.html.twig"%}
-{%block header%}
+{% block link %}
+    <link rel="stylesheet" href="/css/addProject.css">
+{% endblock %}
+{% block header %}
     <h1>Modifier Projet</h1>
-{%endblock%}
+{% endblock %}
 
-{%block main%}
-    {%if project%}
-        <form class="" action="/project/edit/save/{{project.getId}}" method="post">
+{% block main %}
+    {% for errors in app.flashes("error") %}
+        {% for error in errors %}
+            <p class="errorMessage">{{error.message}}</p>
+        {% endfor %}
+    {% endfor %}
+    {% if project %}
+        <form class="projectCreationForm" action="/project/edit/save/{{project.getId}}" method="post">
             <label for="projectName">Nom du projet: </label>
             <input type="text" name="projectName" value="{{project.getName}}">
 
@@ -13,14 +21,16 @@
             <input type="text-area" name="description" value="{{project.getDescription}}"/>
 
             <p>Date de début actuelle: {{project.getStartDate|date("d M Y")}}</p>
-            <label for="startDate">Nouvelle date de debut</label>
-            <input type="date" name="startDate"/>
-
             <p>Date de fin actuelle: {{project.getEndDate|date("d M Y")}}</p>
-            <label for="endDate">Nouvelle date de fin</label>
-            <input type="date" name="endDate" />
+            <div class="dateContainer">
+                <label for="startDate">Nouvelle date de debut</label>
+                <input class="dateInput" type="date" name="startDate"/>
 
-            <button type="submit" name="button">Ajout du projet</button>
+
+                <label for="endDate">Nouvelle date de fin</label>
+                <input class="dateInput" type="date" name="endDate" />
+            </div>
+            <button class="btn-linear-flat" type="submit" name="button">Ajout du projet</button>
         </form>
-    {%endif%}
-{%endblock%}
+    {% endif %}
+{% endblock %}

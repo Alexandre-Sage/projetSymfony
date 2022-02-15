@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use App\Repository\ProjectRepository;
 use App\Entity\Project;
 use App\Repository\UserRepository;
@@ -28,17 +31,27 @@ class TaskController extends AbstractController{
         /**
         * @Route("/project/{id}/task/save", methods={"post"}, name="task_add_save")
         */
-        public function saveTask(Request $request,  ManagerRegistry $doctrine, Project $project/*On ajoute projet dans l'url pour récuperer l'id du projet dans les paramettre de l'url*/){
+        public function saveTask(Request $request,  ManagerRegistry $doctrine,  ValidatorInterface $validator, SessionInterface $session, Project $project/*On ajoute projet dans l'url pour récuperer l'id du projet dans les paramettre de l'url*/){
             $taskData= new Task;
             $entityManager= $doctrine->getManager();
             $taskData->setName($request->request->get("taskName"));
             $taskData->setDescription($request->request->get("taskDescription"));
+            $taskData->setStartDateStr($request->request->get("taskStartingDate"));
             $taskData->setStartDate(new\DateTime($request->request->get("taskStartingDate")));
+            $taskData->setEndDateStr($request->request->get("taskEndingDate"));
             $taskData->setEndDate(new\DateTime($request->request->get("taskEndingDate")));
             $taskData->setProject($project); //recupération de l'id du projet
+            $errors=$validator->validate($taskData);
+            if (count($errors)>0){
+                $this->addFlash(
+                    "error",
+                    $errors
+                );
+                return $this->redirectToRoute("task",["id"=>$project->getId()]);
+            }
             $entityManager->persist($taskData); //Enregistrement des données
             $entityManager->flush();
-            return $this->redirectToRoute("project");
+            return $this->redirectToRoute("project_manager",["id"=>$project->getId()]);
         }
         /**
          * @Route("/project/{projectId}/task/{taskId}/edit", methods={"GET"}, name="task_edit")
@@ -55,7 +68,7 @@ class TaskController extends AbstractController{
         * @ParamConverter("task", options={"mapping": {"taskId"   : "id"}})
         */
 
-        public function editTaskSave(Request $request, ManagerRegistry $doctrine, Project $project, Task $task){
+        public function editTaskSave(Request $request,ValidatorInterface $validator, SessionInterface $session, ManagerRegistry $doctrine, Project $project, Task $task){
             $entityManager= $doctrine->getManager();
             $task->setName($request->request->get("taskName"));
             $task->setDescription($request->request->get("taskDescription"));
@@ -64,6 +77,14 @@ class TaskController extends AbstractController{
             $task->setEndDateStr($request->request->get("taskEndingDate"));
             $task->setEndDate(new\DateTime($request->request->get("taskEndingDate")));
             $task->setProject($project);
+                $errors=$validator->validate($task);
+                if (count($errors)>0){
+                    $this->addFlash(
+                        "error",
+                        $errors
+                    );
+                    return $this->redirectToRoute("task_edit",["projectId"=>$project->getId(),"taskId"=>$task->getId()]);
+                }
             $entityManager->persist($task);
             $entityManager->flush();
             return $this-> redirectToRoute("project");
@@ -79,7 +100,7 @@ class TaskController extends AbstractController{
             $entityManager= $doctrine->getManager();
             $entityManager->remove($task);
             $entityManager->flush();
-            return $this->redirectToRoute("project");
+            return $this->redirectToRoute("project_manager",["id"=>$project->getId()]);
         }
 
 }

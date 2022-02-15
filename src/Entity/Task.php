@@ -21,7 +21,9 @@ class Task
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ nom vide"
+     *)
      * @Assert\Length(
      * max= 150,
      * maxMessage= "Maximum atteint"
@@ -31,7 +33,9 @@ class Task
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ description vide"
+     *)
      * @Assert\Length(
      * max= 2500,
      * maxMessage= "Maximum atteint"
@@ -40,7 +44,9 @@ class Task
     private $description;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ date de debut Vide"
+     *)
      * @var string
      * @Assert\Date
      */
@@ -54,7 +60,9 @@ class Task
     private $start_date;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Champ date de fin Vide"
+     *)
      * @var string
      * @Assert\Date
      */

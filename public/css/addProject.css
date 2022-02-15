@@ -1,0 +1,58 @@
+/*    {% if users %}
+        <select class="usersSelector" name="userName">
+        {% for user in users %}
+            <option class="userSelectorOption" value="{{user.getId}}">{{user.getFirstName}}{{user.getLastName}}</option>
+        {% endfor %}
+        </select>
+    {% endif %}
+    <p>{{dump(project)}}</p>*/
+.projectCreationForm{
+        border: var(--container-border);
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 55rem;
+        width: 75%;
+}
+
+.dateContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+}
+
+.dateInput{
+    width: 20rem;
+    text-align: center;
+}
+
+p{
+    font-size: 2rem;
+}
+
+.projectUserForm{
+    border: var(--container-border);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 55rem;
+    width: 75%;
+}
+
+.userFormContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.userFormDiv{
+    display: flex;
+    width: 25rem;
+    align-items: center;
+    flex-direction: column;
+}

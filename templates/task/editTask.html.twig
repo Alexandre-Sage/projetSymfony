@@ -1,20 +1,32 @@
+{%extends "/project/index.html.twig"%}
+{% block link %}
+    <link rel="stylesheet" href="/css/addProject.css">
+{% endblock %}
 {% block header %}
-    <h3>Tache a modifier: {{task.getName}} du projet: {{project.getName}}</h3>
-    <p>{{dump(project)}}</p>
+    <h1>Tache a modifier: {{task.getName}} du projet: {{project.getName}}</h1>
+
 {% endblock %}
 
 {% block main %}
+    {% for errors in app.flashes("error") %}
+        {% for error in errors %}
+            <p class="errorMessage">{{error.message}}</p>
+        {% endfor %}
+    {% endfor %}
     {% if task %}
-        <form class="" action="/project/{{project.getId}}/task/{{task.getId}}/edit/save" method="post">
+        <form class="projectCreationForm" action="/project/{{project.getId}}/task/{{task.getId}}/edit/save" method="post">
             <label for="taskName" value="{{task.getName}}">Nom de la tache</label>
             <input type="text" name="taskName" value="{{task.getName}}"/>
             <label for="taskDescription">Description de la tache</label>
             <input type="text" name="taskDescription" value="{{task.getDescription}}"/>
-            <label for="taskStartingDate">Date de début de la tache</label>
-            <input type="text" name="taskStartingDate" value="{{task.getStartDate | date("d M Y")}}"/>
-            <label for="taskEndingDate">Date de fin de la tache</label>
-            <input type="text" name="taskEndingDate" value="{{task.getEndDate | date("d M Y")}}"/>
-            <button type="submit" name="button">Ajouter</button>
+            <div class="dateContainer">
+                <label for="taskStartingDate">Date de début</label>
+                <input class="dateInput" type="date" name="taskStartingDate"/>
+                <label for="taskEndingDate">Date de fin</label>
+                <input class="dateInput" type="date" name="taskEndingDate"/>
+            </div>
+
+            <button class="btn-linear-flat" type="submit" name="button">Modifier</button>
         </form>
     {% endif %}
 {% endblock %}

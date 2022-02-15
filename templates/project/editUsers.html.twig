@@ -1,5 +1,7 @@
 {% extends "/project/index.html.twig" %}
-
+{% block link %}
+    <link rel="stylesheet" href="/css/addProject.css">
+{% endblock %}
 {% block header %}
     <h1>Ajouter des utilisateur</h1>
 {% endblock %}
@@ -15,12 +17,17 @@
     {% endif %}
     {% if project %}
         {% if users %}
-            <form class="" action="/project/edit/{{project.getId}}/addUsers/save" method="post">
+            <form class="projectUserForm" action="/project/edit/{{project.getId}}/addUsers/save" method="post">
             {% for user in users %}
-                    <input type="checkbox" name="userInput[]" value="{{user.getId}}">
-                    <label for="userInput">{{user.getFirstName}} {{user.getLastName}}</label>
+                    <div class="userFormContainer">
+                        <div class="userFormDiv">
+                        <input type="checkbox" name="userInput[]" value="{{user.getId}}">
+                        <label for="userInput">{{user.getFirstName}} {{user.getLastName}}</label>
+                        </div>
+                    </div>
+
             {% endfor %}
-                    <button type="submit" name="button">Ajouter les utilisateurs</button>
+                    <button class="btn-linear-flat" type="submit" name="button">Ajouter les utilisateurs</button>
                 </form>
         {% endif %}
     {% endif %}
